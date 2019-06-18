@@ -79,22 +79,31 @@ define(function(require, exports, module) {
         handle.on("load", function(){
             console.log("bone101: load");
             commands.addCommand({
-                name: "bone101",
+                name: "bone101_about",
                 isAvailable: function(){ return true; },
                 exec: function() {
-                    bone101();
+                    bone101("about");
                 }
             }, handle);
+            commands.addCommand({
+                name: "bone101_intro",
+                isAvailable: function(){ return true; },
+                exec: function() {
+                    bone101("intro");
+                }
+            }, handle);
+            bone101("intro");
 
             menus.addItemByPath("BeagleBone", null, 20, handle);
-            menus.addItemByPath("BeagleBone/About BeagleBone",
-                null, 22, handle);
-            menus.addItemByPath("BeagleBone/bone101", new ui.item({
-                command: "bone101"
+            menus.addItemByPath("BeagleBone/About",new ui.item({
+                command: "bone101_about"
+            }), 22, handle);
+            menus.addItemByPath("BeagleBone/Introduction", new ui.item({
+                command: "bone101_intro"
             }), 24, handle);
         });
 
-        function bone101() {
+        function bone101(page) {
             var filename = options.packagePath + ".bone101";
             console.log("opening " + filename);
             var tab = tabManager.open({
